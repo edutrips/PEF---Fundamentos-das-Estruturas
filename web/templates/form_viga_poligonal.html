@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Dados da Viga Reta</h2>
+  <form method="post">
+    <div class="row mb-3">
+      <div class="col">
+        <label for="comprimento" class="form-label">Comprimento (m)</label>
+        <input type="text" name="comprimento" class="form-control" placeholder="Ex: 6" required>
+      </div>
+      <div class="col">
+        <label for="carga_total" class="form-label">Carga Total (kN)</label>
+        <input type="text" name="carga_total" class="form-control" placeholder="Ex: 20" required>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col">
+        <label for="dist_apoio_dir" class="form-label">Distância Apoio Direito (m)</label>
+        <input type="text" name="dist_apoio_dir" class="form-control" placeholder="Ex: 2" required>
+      </div>
+      <div class="col">
+        <label for="dist_carga" class="form-label">Distância Carga (m)</label>
+        <input type="text" name="dist_carga" class="form-control" placeholder="Ex: 4" required>
+      </div>
+    </div>
+
+    <h5 class="mt-4">Cargas Pontuais Adicionais (opcional)</h5>
+    <div class="row mb-3">
+      <div class="col-3">
+        <label for="carga1_dist" class="form-label">Carga1: Distância (m)</label>
+        <input type="text" name="carga1_dist" class="form-control" placeholder="Ex: 1">
+      </div>
+      <div class="col-3">
+        <label for="carga1_inten" class="form-label">Carga1: Intensidade (kN)</label>
+        <input type="text" name="carga1_inten" class="form-control" placeholder="Ex: 5">
+      </div>
+      <div class="col-3">
+        <label for="carga2_dist" class="form-label">Carga2: Distância (m)</label>
+        <input type="text" name="carga2_dist" class="form-control" placeholder="Ex: 3">
+      </div>
+      <div class="col-3">
+        <label for="carga2_inten" class="form-label">Carga2: Intensidade (kN)</label>
+        <input type="text" name="carga2_inten" class="form-control" placeholder="Ex: 10">
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Calcular e Exibir Gráfico</button>
+  </form>
+{% endblock %}

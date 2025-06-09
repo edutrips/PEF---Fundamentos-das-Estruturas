@@ -1,0 +1,275 @@
+/* ==========================================================================
+   1) MODO ESCURO GLOBAL (forçar fundo cinza-escuro em toda a página)
+   ========================================================================== */
+html, body {
+  background-color: #1f2937 !important;  /* gray-800 */
+  color: #f3f4f6 !important;             /* gray-100 */
+  margin: 0;
+  padding: 0;
+  text-align: center;                    /* centraliza texto por padrão */
+}
+
+/* Evita que containers do Bootstrap (que às vezes têm bg-white) sobreponham */
+.container,
+.container-fluid,
+.row,
+.bg-white {
+  background-color: transparent !important;
+}
+
+/* ========================================================================
+   2) TEXTOS, LABELS e PLACEHOLDERS
+   ======================================================================== */
+
+/* Forçar cor clara em praticamente todo elemento de texto */
+body, html,
+h1, h2, h3, h4, h5, h6,
+p, span, strong, b, em, i, small,
+label, legend,
+.form-check-label, .form-check-input + label,
+option, select, textarea, input, button,
+a, .alert, .alert-danger, .invalid-feedback {
+  color: #f3f4f6 !important; /* gray-100 */
+}
+
+h1, h2, h3, h5 {
+  color: #3b82f6 !important; /* azul-500 */
+  text-align: center;        /* centraliza títulos */
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #9ca3af !important; /* gray-400 */
+  opacity: 1 !important;
+}
+
+/* ------------------------------------------------------------------------
+   Radios/checkboxes: legendar o texto (bootstrap .form-check-label) em claro
+   ------------------------------------------------------------------------ */
+.form-check-label {
+  color: #f3f4f6 !important;
+}
+
+/* Quando rádio/checkbox estiver marcado, círculo interno azul-600 */
+.form-check-input:checked {
+  background-color: #2563eb !important; /* azul-600 */
+  border-color: #2563eb !important;
+}
+
+/* ------------------------------------------------------------------------
+   Links em tom claro/azul, para contrastar no fundo escuro
+   ------------------------------------------------------------------------ */
+a {
+  color: #93c5fd !important; /* azul-300 */
+}
+a:hover, a:focus {
+  color: #bfdbfe !important; /* azul-200 */
+}
+
+/* ========================================================================
+   3) BOTÕES
+   ======================================================================== */
+
+/* Botões tipo .btn, .btn-primary, .btn-secondary: texto sempre claro */
+.btn, .btn-primary, .btn-secondary, button {
+  color: #f3f4f6 !important;
+}
+
+/* Estilo próprio para .btn-primary (azul-600) */
+.btn-primary {
+  background-color: #2563eb !important; /* azul-600 */
+  color: #f3f4f6 !important;
+}
+.btn-primary:hover {
+  background-color: #1e40af !important; /* azul-800 */
+}
+
+/* ========================================================================
+   4) CAMPOS VIGA RETA
+   ======================================================================== */
+
+/* Cada bloco (label + input) fica dentro de .viga-reta-bloco */
+.viga-reta-bloco {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex: 1 1 0;        /* cresce/encolhe igualitário */
+  max-width: 240px;
+  width: 100%;
+  gap: 0.5rem;        /* 8px de espaço entre label e input */
+  text-align: left;   /* labels alinhados à esquerda dentro do bloco */
+  margin: 0 auto;     /* centraliza horizontalmente o próprio bloco*/
+}
+
+.viga-reta-bloco label {
+  min-height: 2.5rem;    /* ≈ 40px */
+  line-height: 1.25rem;
+  color: #e5e7eb !important; /* gray-200 */
+}
+
+/* Inputs dentro de .viga-reta-bloco */
+.viga-reta-bloco input {
+  background-color: #374151 !important; /* gray-700 */
+  color: #f3f4f6 !important;            /* gray-100 */
+  border: 1px solid #4b5563 !important; /* gray-600 */
+  border-radius: 0.25rem;
+}
+
+/* ========================================================================
+   5) CARDS DE VIGA POLIGONAL E TRELIÇA 
+   ======================================================================== */
+
+.card-estrutura {
+  background-color: #1f2937; /* gray-800 */
+  border: 1px solid #4b5563; /* gray-600 */
+  border-radius: 0.5rem;     /* 8px */
+  padding: 1.5rem;
+  margin: 0 auto 1.5rem auto;/* centraliza + espaço abaixo */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  text-align: center;        /* centraliza texto dentro do card */
+  max-width: 48rem;          /* ≈ 768px (mesma largura do max-w-3xl do Tailwind) */
+}
+
+/* Títulos dentro dos cards em azul-400 */
+.card-estrutura h3,
+.card-estrutura h5 {
+  color: #60a5fa !important; /* azul-400 (mais claro que azul-500) */
+  margin-bottom: 1rem;
+}
+
+/* Labels dentro dos cards */
+.card-estrutura label {
+  color: #e5e7eb !important; /* gray-200 */
+  text-align: left;
+}
+
+/* Inputs genéricos dentro dos cards */
+.card-estrutura input[type="number"],
+.card-estrutura input[type="text"] {
+  background-color: #374151 !important; /* gray-700 */
+  color: #f3f4f6 !important;            /* gray-100 */
+  border: 1px solid #4b5563 !important; /* gray-600 */
+  border-radius: 0.25rem;
+  text-align: center;                   /* centraliza valor digitado */
+}
+
+/* ========================================================================
+   6) GRADES DE MATRIZES E VETORES (Viga Poligonal e Treliça)
+   ======================================================================== */
+
+/* Matriz de Rigidez, Cortantes, Momentos (4×4) – IDs definidos no HTML */
+#matrix_rigidez_grid,
+#matrix_cortantes_grid,
+#matrix_momentos_grid {
+  display: grid;
+  grid-template-columns: repeat(4, 3rem); /* 4 colunas de 3rem */
+  grid-auto-rows: 2.5rem;
+  gap: 0.5rem;
+  justify-content: center;                /* centraliza grade dentro do container */
+  margin: 0 auto;                         /* centraliza container, se necessário */
+}
+
+/* Vetor de Forças (4×1) – ID definido no HTML */
+#vetor_forcas_grid {
+  display: grid;
+  grid-template-columns: repeat(4, 3rem); /* 4 colunas para vetor */
+  grid-auto-rows: 2.5rem;
+  gap: 0.5rem;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+/* Matriz de Rigidez Treliça (6×6) */
+#matrix_rigidez_t_grid {
+  display: grid;
+  grid-template-columns: repeat(6, 3rem); /* 6 colunas de 3rem */
+  grid-auto-rows: 2.5rem;
+  gap: 0.5rem;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+/* Vetor de Forças Treliça (6×1) e Deslocamentos Conhecidos (6×1) */
+#vetor_forcas_t_grid,
+#vetor_desloc_t_grid {
+  display: grid;
+  grid-template-columns: repeat(6, 3rem); /* 6 colunas para vetor */
+  grid-auto-rows: 2.5rem;
+  gap: 0.5rem;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.matrix-container,
+.vector-container {
+  display: inline-block;
+  position: relative;
+  background-color: #111827; /* gray-900 para contraste */
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 1rem;
+  border-radius: 0.25rem;
+}
+
+/* Colchetes verticais brancos nas laterais */
+.matrix-container::before,
+.matrix-container::after,
+.vector-container::before,
+.vector-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 0.5rem;
+  border: 4px solid #f3f4f6; /* branco suável */
+}
+
+.matrix-container::before,
+.vector-container::before {
+  left: 0;
+  border-right: none;
+}
+
+.matrix-container::after,
+.vector-container::after {
+  right: 0;
+  border-left: none;
+}
+
+/* Inputs específicos dentro do grid (override de .grid-input, se existir) */
+.matrix-grid input,
+.vector-grid input {
+  background-color: #374151 !important; /* gray-700 */
+  color: #f3f4f6 !important;            /* gray-100 */
+  border: 1px solid #4b5563 !important; /* gray-600 */
+  border-radius: 0.25rem;
+}
+
+/* ========================================================================
+   7) RESPONSIVIDADE
+   ======================================================================== */
+
+@media (max-width: 576px) {
+  #matrix_rigidez_grid,
+  #matrix_cortantes_grid,
+  #matrix_momentos_grid,
+  #vetor_forcas_grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 2rem;
+  }
+  #matrix_rigidez_t_grid,
+  #vetor_forcas_t_grid,
+  #vetor_desloc_t_grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 2rem;
+  }
+  .matrix-container::before,
+  .matrix-container::after,
+  .vector-container::before,
+  .vector-container::after {
+    border-width: 3px;
+  }
+}
+
+.card {
+  background-color: transparent !important;
+}

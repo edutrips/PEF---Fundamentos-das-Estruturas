@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calcule Estrutura</title>
+
+  <!-- 1) Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+
+  <datalist id="lista0a100">
+    {% for i in range(101) %}
+      <option value="{{ i }}">
+    {% endfor %}
+  </datalist>
+
+  <style>
+    /* Esconde todos os blocos de campos, exceto o que tiver a classe .mostrar */
+    .seção-campos {
+      display: none;
+    }
+    .seção-campos.mostrar {
+      display: block;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+  <div class="max-w-3xl mx-auto py-8 px-4">
+    <h1 class="text-3xl font-bold text-blue-600 mb-6">Escolha a Estrutura</h1>
+
+    <form method="post" action="{{ url_for('calcular') }}" class="space-y-6">
+
+      <!-- Seletor de tipo de estrutura -->
+      <div>
+        <span class="block text-lg font-medium text-gray-700 mb-2">Tipo de Estrutura</span>
+        <div class="flex space-x-6 justify-center">
+          <label class="inline-flex items-center">
+            <input type="radio" name="tipo_estrutura" value="viga_reta"
+                   class="form-radio h-5 w-5 text-blue-600" />
+            <span class="ml-2 text-gray-700">Viga Reta</span>
+          </label>
+          <label class="inline-flex items-center">
+            <input type="radio" name="tipo_estrutura" value="viga_poligonal"
+                   class="form-radio h-5 w-5 text-blue-600" />
+            <span class="ml-2 text-gray-700">Viga Poligonal</span>
+          </label>
+          <label class="inline-flex items-center">
+            <input type="radio" name="tipo_estrutura" value="trelica"
+                   class="form-radio h-5 w-5 text-blue-600" />
+            <span class="ml-2 text-gray-700">Treliça Isostática</span>
+          </label>
+        </div>
+      </div>
+
+      <hr class="border-gray-300">
+
+      <!-- Bloco de campos para VIGA RETA -->
+      <div id="campos_viga_reta" class="seção-campos mx-auto max-w-3xl space-y-6">
+
+        <!-- Card: Dados da Viga Reta -->
+        <div class="p-6 rounded-lg shadow-md border border-gray-600 bg-gray-800">
+          <h3 class="text-2xl font-semibold text-blue-400 mb-6 text-center">Dados da Viga Reta</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+            <!-- Cada campo continua com a classe viga-reta-bloco -->
+            <div class="viga-reta-bloco">
+              <label for="comprimento" class="block text-sm font-medium text-gray-200 mb-1">
+                Comprimento (m)
+              </label>
+              <input type="number" name="comprimento" id="comprimento"
+                    class="mt-1 block w-full rounded-md border-gray-500 bg-gray-700 text-white
+                            focus:ring-blue-500 focus:border-blue-500"
+                    list="lista0a100"
+                    placeholder="Ex: 6" min="0" max="100" />
+            </div>
+            <!-- repita para os outros 3 campos -->
+            <div class="viga-reta-bloco">
+              <label for="carga_total" class="block text-sm font-medium text-gray-200 mb-1">
+                Carga Total (kN)
+              </label>
+              <input type="number" name="carga_total" id="carga_total"
+                    class="mt-1 block w-full rounded-md border-gray-500 bg-gray-700 text-white
+                            focus:ring-blue-500 focus:border-blue-500"
+                    list="lista0a100"
+                    placeholder="Ex: 20" min="0" max="100" />
+            </div>
+            <div class="viga-reta-bloco">
+              <label for="dist_apoio_dir" class="block text-sm font-medium text-gray-200 mb-1">
+                Distância Apoio Direito (m)
+              </label>
+              <input type="number" name="dist_apoio_dir" id="dist_apoio_dir"
+                    class="mt-1 block w-full rounded-md border-gray-500 bg-gray-700 text-white
+                            focus:ring-blue-500 focus:border-blue-500"
+                    list="lista0a100"
+                    placeholder="Ex: 2" min="0" max="100" />
+            </div>
+            <div class="viga-reta-bloco">
+              <label for="dist_carga" class="block text-sm font-medium text-gray-200 mb-1">
+                Distância Carga (m)
+              </label>
+              <input type="number" name="dist_carga" id="dist_carga"
+                    class="mt-1 block w-full rounded-md border-gray-500 bg-gray-700 text-white
+                            focus:ring-blue-500 focus:border-blue-500"
+                    list="lista0a100"
+                    placeholder="Ex: 4" min="0" max="100" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: Cargas Pontuais -->
+        <div class="p-6 rounded-lg shadow-md border border-gray-600 bg-gray-800">
+          <h5 class="text-lg font-medium text-gray-200 mb-4">Cargas Pontuais (opcional)</h5>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="viga-reta-bloco">
+              <label for="carga1_dist" class="block text-sm font-medium text-gray-200 mb-1">
+                Carga 1: Distância (m)
+              </label>
+              <input type="number" name="carga1_dist" id="carga1_dist"
+                    class="mt-1 block w-full rounded-md border-gray-500 bg-gray-700 text-white
+                            focus:ring-blue-500 focus:border-blue-500"
+                    list="lista0a100"
+                    placeholder="Ex: 1" min="0" max="100" />
+            </div>
+            <div class="viga-reta-bloco">
+              <label for="carga1_inten" class="block text-sm font-medium text-gray-200 mb-1">
+                Carga 1: Intensidade (kN)
+              </label>
+              <input type="number" name="carga1_inten" id="carga1_inten"
+                    class="mt-1 block w-full rounded-md border-gray-500 bg-gray-700 text-white
+                            focus:ring-blue-500 focus:border-blue-500"
+                    list="lista0a100"
+                    placeholder="Ex: 5" min="0" max="100" />
+            </div>
+            <div class="viga-reta-bloco">
+              <label for="carga2_dist" class="block text-sm font-medium text-gray-200 mb-1">
+                Carga 2: Distância (m)
+              </label>
+              <input type="number" name="carga2_dist" id="carga2_dist"
+                    class="mt-1 block w-full rounded-md border-gray-500 bg-gray-700 text-white
+                            focus:ring-blue-500 focus:border-blue-500"
+                    list="lista0a100"
+                    placeholder="Ex: 3" min="0" max="100" />
+            </div>
+            <div class="viga-reta-bloco">
+              <label for="carga2_inten" class="block text-sm font-medium text-gray-200 mb-1">
+                Carga 2: Intensidade (kN)
+              </label>
+              <input type="number" name="carga2_inten" id="carga2_inten"
+                    class="mt-1 block w-full rounded-md border-gray-500 bg-gray-700 text-white
+                            focus:ring-blue-500 focus:border-blue-500"
+                    list="lista0a100"
+                    placeholder="Ex: 10" min="0" max="100" />
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ==================== Bloco Viga Poligonal ==================== -->
+      <div id="campos_viga_poligonal" class="seção-campos mx-auto max-w-3xl">
+        <div class="card-estrutura">
+          <h3 class="text-2xl font-semibold">Dados da Viga Poligonal Espacial</h3>
+
+          <!-- 1) Matriz de Rigidez 4×4 -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2">
+              Matriz de Rigidez (4×4)
+            </label>
+            <div class="matrix-container">
+              <div class="matrix-grid" id="matrix_rigidez_grid">
+                {% for i in range(4) %}
+                  {% for j in range(4) %}
+                    <input type="number"
+                          name="rigidez_{{i}}_{{j}}"
+                          class="grid-input"
+                          placeholder="r{{i+1}}{{j+1}}"
+                          min="-100" max="100" />
+                  {% endfor %}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+
+          <!-- 2) Vetor de Forças 4×1 -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2">
+              Vetor de Forças (4×1)
+            </label>
+            <div class="vector-container">
+              <div class="vector-grid" id="vetor_forcas_grid">
+                {% for i in range(4) %}
+                  <input type="number"
+                        name="forcas_{{i}}"
+                        class="grid-input"
+                        placeholder="f{{i+1}}"
+                        min="-100" max="100" />
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+
+          <!-- 3) Matriz de Cortantes 4×4 -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2">
+              Matriz de Cortantes (4×4)
+            </label>
+            <div class="matrix-container">
+              <div class="matrix-grid" id="matrix_cortantes_grid">
+                {% for i in range(4) %}
+                  {% for j in range(4) %}
+                    <input type="number"
+                          name="cortantes_{{i}}_{{j}}"
+                          class="grid-input"
+                          placeholder="c{{i+1}}{{j+1}}"
+                          min="-100" max="100" />
+                  {% endfor %}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+
+          <!-- 4) Matriz de Momentos 4×4 -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2">
+              Matriz de Momentos (4×4)
+            </label>
+            <div class="matrix-container">
+              <div class="matrix-grid" id="matrix_momentos_grid">
+                {% for i in range(4) %}
+                  {% for j in range(4) %}
+                    <input type="number"
+                          name="momentos_{{i}}_{{j}}"
+                          class="grid-input"
+                          placeholder="m{{i+1}}{{j+1}}"
+                          min="-100" max="100" />
+                  {% endfor %}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+
+          <!-- 5) Distâncias -->
+          <div class="mb-4">
+            <label for="distancias" class="block text-sm font-medium mb-2">
+              Distâncias (Ex: "0,2,4,6")
+            </label>
+            <input type="text" name="distancias" id="distancias"
+                  class="form-control w-full rounded-md bg-gray-700 text-white"
+                  placeholder="Ex: 0,2,4,6" />
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== Bloco Treliça ==================== -->
+      <div id="campos_trelica" class="seção-campos mx-auto max-w-3xl">
+        <div class="card-estrutura">
+          <h3 class="text-2xl font-semibold">Dados da Treliça Plana Isostática</h3>
+
+          <!-- 1) Matriz de Rigidez 6×6 -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2">
+              Matriz de Rigidez (6×6)
+            </label>
+            <div class="matrix-container">
+              <div class="matrix-grid" id="matrix_rigidez_t_grid">
+                {% for i in range(6) %}
+                  {% for j in range(6) %}
+                    <input type="number"
+                          name="rigidez_t_{{i}}_{{j}}"
+                          class="grid-input"
+                          placeholder="k{{i+1}}{{j+1}}"
+                          min="-100" max="100" />
+                  {% endfor %}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+
+          <!-- 2) Vetor de Forças 6×1 -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2">
+              Vetor de Forças (6×1)
+            </label>
+            <div class="vector-container">
+              <div class="vector-grid" id="vetor_forcas_t_grid">
+                {% for i in range(6) %}
+                  <input type="number"
+                        name="forcas_t_{{i}}"
+                        class="grid-input"
+                        placeholder="f{{i+1}}"
+                        min="-100" max="100" />
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+
+          <!-- 3) Deslocamentos Conhecidos 6×1 -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2">
+              Deslocamentos Conhecidos (6×1)
+            </label>
+            <div class="vector-container">
+              <div class="vector-grid" id="vetor_desloc_t_grid">
+                {% for i in range(6) %}
+                  <input type="number"
+                        name="deslocamentos_conhecidos_t_{{i}}"
+                        class="grid-input"
+                        placeholder="d{{i+1}}"
+                        min="-100" max="100" />
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Botão de envio -->
+      <div class="pt-4">
+        <button type="submit"
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md shadow">
+          Calcular e Gerar Gráfico / Tabela
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+  <!-- JavaScript para mostrar/esconder blocos conforme a escolha e navegação por Enter -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const radios = document.querySelectorAll('input[name="tipo_estrutura"]');
+      const divVigaReta  = document.getElementById('campos_viga_reta');
+      const divVigaPolig = document.getElementById('campos_viga_poligonal');
+      const divTrelica   = document.getElementById('campos_trelica');
+
+      radios.forEach(radio => {
+        radio.addEventListener('change', () => {
+          divVigaReta.classList.remove('mostrar');
+          divVigaPolig.classList.remove('mostrar');
+          divTrelica.classList.remove('mostrar');
+
+          if (radio.value === 'viga_reta')       divVigaReta.classList.add('mostrar');
+          else if (radio.value === 'viga_poligonal') divVigaPolig.classList.add('mostrar');
+          else if (radio.value === 'trelica')     divTrelica.classList.add('mostrar');
+        });
+      });
+
+      const handleEnterNavigation = (e) => {
+        if (e.key !== 'Enter') return;
+        e.preventDefault();
+
+        const inputAtual = e.target;
+        const seção = inputAtual.closest('.seção-campos.mostrar');
+        if (!seção) return;
+
+        const inputsNaSeção = Array.from(seção.querySelectorAll('input'));
+        const idx = inputsNaSeção.indexOf(inputAtual);
+        const valor = parseFloat(inputAtual.value);
+
+        if (!isNaN(valor)) {
+          for (let i = idx + 1; i < inputsNaSeção.length; i++) {
+            if (!inputsNaSeção[i].disabled && inputsNaSeção[i].offsetParent !== null) {
+              inputsNaSeção[i].focus();
+              break;
+            }
+          }
+        } else {
+          inputAtual.classList.add('is-invalid');
+          setTimeout(() => inputAtual.classList.remove('is-invalid'), 1200);
+        }
+      };
+
+      const allInputs = document.querySelectorAll(
+        '#campos_viga_reta input, ' +
+        '#campos_viga_poligonal input, ' +
+        '#campos_trelica input'
+      );
+      allInputs.forEach(input => input.addEventListener('keydown', handleEnterNavigation));
+    });
+  </script>
+
+  <!-- Icones (se precisar) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/heroicons/1.0.6/outline.min.js"></script>
+</body>
+</html>

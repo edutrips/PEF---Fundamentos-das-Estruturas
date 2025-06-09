@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Dados da Treliça Plana Isostática (exemplo)</h2>
+  <p>Insira a matriz global de rigidez, o vetor de forças conhecidas e o vetor de deslocamentos fixos.</p>
+  <form method="post">
+    <div class="mb-3">
+      <label for="matriz_rigidez" class="form-label">Matriz de Rigidez (Ex: "1,0,0,0,0,0; 0,1,0,0,0,0; ...")</label>
+      <textarea name="matriz_rigidez" class="form-control" rows="3" placeholder="Ex: 2, -1, 0, 0, 0, 0; -1, 2, -1, 0, 0, 0; ..." required></textarea>
+    </div>
+    <div class="mb-3">
+      <label for="forcas" class="form-label">Vetor de Forças (Ex: "0,0,0,-10,0,0")</label>
+      <input type="text" name="forcas" class="form-control" placeholder="Ex: 0,0,0,-10,0,0" required>
+    </div>
+    <div class="mb-3">
+      <label for="deslocamentos_conhecidos" class="form-label">Vetor de Deslocamentos Conhecidos (Ex: "0,0,0,0,0,0")</label>
+      <input type="text" name="deslocamentos_conhecidos" class="form-control" placeholder="Ex: 0,0,0,0,0,0" required>
+    </div>
+    <button type="submit" class="btn btn-warning">Calcular Reações</button>
+  </form>
+{% endblock %}

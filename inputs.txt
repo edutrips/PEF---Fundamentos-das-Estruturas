@@ -1,0 +1,93 @@
+------------------ VIGA RETA -------------------
+
+const dadosVigaReta = {
+  matriz_rigidez: [
+    [12, -6, 0],
+    [-6, 8, -4],
+    [0, -4, 10]
+  ],
+  vetor_forcas: [10, 0, -5],
+  deslocamentos_conhecidos: [0, 0, 0]
+};
+
+for (let i = 0; i < 3; i++) {
+  for (let j = 0; j < 3; j++) {
+    const rigidezInput = document.querySelector(`input[name="rigidez_r_${i}_${j}"]`);
+    if (rigidezInput) rigidezInput.value = dadosVigaReta.matriz_rigidez[i][j];
+  }
+}
+
+for (let i = 0; i < 3; i++) {
+  const forcaInput = document.querySelector(`input[name="forcas_r_${i}"]`);
+  const deslocInput = document.querySelector(`input[name="deslocamentos_r_${i}"]`);
+  if (forcaInput) forcaInput.value = dadosVigaReta.vetor_forcas[i];
+  if (deslocInput) deslocInput.value = dadosVigaReta.deslocamentos_conhecidos[i];
+}
+
+----------------- VIGA POLIGONAL ----------------
+const dadosVigaPoligonal = {
+  matriz_rigidez: [
+    [10, -1,   0,   0],
+    [-1, 12,  -2,   0],
+    [0,  -2,  15,  -3],
+    [0,   0,  -3,   8]
+  ],
+  vetor_forcas: [5, 0, 10, 0],
+  matriz_cortantes: [
+    [0, 0, 0, 1],
+    [0, 0, 1, 0],
+    [0, 1, 0, 0],
+    [1, 0, 0, 0]
+  ],
+  matriz_momentos: [
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [1, 2, 0, 0]
+  ],
+  distancias: [0, 1.5, 3.5, 6]
+};
+
+for (let i = 0; i < 4; i++) {
+  for (let j = 0; j < 4; j++) {
+    document.querySelector(`input[name="rigidez_${i}_${j}"]`).value =
+      dadosVigaPoligonal.matriz_rigidez[i][j];
+    document.querySelector(`input[name="cortantes_${i}_${j}"]`).value =
+      dadosVigaPoligonal.matriz_cortantes[i][j];
+    document.querySelector(`input[name="momentos_${i}_${j}"]`).value =
+      dadosVigaPoligonal.matriz_momentos[i][j];
+  }
+}
+for (let i = 0; i < 4; i++) {
+  document.querySelector(`input[name="forcas_${i}"]`).value =
+    dadosVigaPoligonal.vetor_forcas[i];
+}
+document.querySelector('input[name="distancias"]').value =
+  dadosVigaPoligonal.distancias.join(',');
+
+---------------- TRELIÇA -----------------
+const dadosTrelica = {
+  matriz_rigidez: [
+    [4, -2,  0,  0,  0,  0],
+    [-2, 5, -1,  0,  0,  0],
+    [0, -1,  6, -1,  0,  0],
+    [0,   0, -1,  7, -2,  0],
+    [0,   0,  0, -2,  5, -2],
+    [0,   0,  0,  0, -2,  4]
+  ],
+  vetor_forcas: [0, 5, 0, 0, -15, 0],
+  deslocamentos_conhecidos: [0, 0, 0, 0, 0, 0]
+};
+
+for (let i = 0; i < 6; i++) {
+  for (let j = 0; j < 6; j++) {
+    document.querySelector(`input[name="rigidez_t_${i}_${j}"]`).value =
+      dadosTrelica.matriz_rigidez[i][j];
+  }
+}
+for (let i = 0; i < 6; i++) {
+  document.querySelector(`input[name="forcas_t_${i}"]`).value =
+    dadosTrelica.vetor_forcas[i];
+  document.querySelector(`input[name="deslocamentos_conhecidos_t_${i}"]`).value =
+    dadosTrelica.deslocamentos_conhecidos[i];
+}
